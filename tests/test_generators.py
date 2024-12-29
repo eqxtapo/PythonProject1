@@ -118,8 +118,8 @@ def test_transaction_descriptions_zero():
 
 
 def test_card_number_generator():
-    numer = card_number_generator(95, 96)
-    assert next(numer) == '0000 0000 0000 0095'
+    numer = card_number_generator(38, 39)
+    assert next(numer) == '0000 0000 0000 0038'
 
 
 def test_card_number_generator_beginning():

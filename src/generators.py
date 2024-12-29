@@ -22,7 +22,7 @@ def transaction_descriptions(transactions: list) -> Generator[Any, Any, Any]:
 
 
 def card_number_generator(start: int, stop: int) -> Generator[str, Any, None]:
-    """Функция может сгенерировать номера карт в заданном диапазоне
+    """Функция генерирует номера карт в диапазоне
     от 0000 0000 0000 0001 до 9999 9999 9999 9999."""
     for x in range(start, stop + 1):
         number_zero = "0000000000000000"
