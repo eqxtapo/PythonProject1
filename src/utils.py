@@ -18,11 +18,18 @@ def transaction_returner(path: str) -> list[dict]:
     Если файл пустой, содержит не список или не найден, функция возвращает пустой список."""
     returned_list = []
     try:
-        logger.info("Начал выгрузку с файла")
+        logger.info(f"Открываем файл {path}")
         with open(path, encoding="utf-8") as json_file:
             content = json.load(json_file)
             if isinstance(content, list):
-                returned_list = content
-        logger.info("Окончил выгрузку с файла")
+                if len(content) != 0:
+                    returned_list = content
+                    logger.info("Содержание файла корректное, возвращаем список")
+                else:
+                    logger.warning(f"Файл {path} содержит пустой список")
+            else:
+                logger.error(f"Некорректный ввод. Файл {path} содержит не список")
+    except Exception as exce:
+        logger.error(f"Ошибка при попытке открыть файл {path}: {exce}")
     finally:
         return returned_list

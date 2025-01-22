@@ -14,15 +14,23 @@ logger.setLevel(logging.DEBUG)
 
 def get_mask_card_number(card_number: str) -> str:
     """ Функция маскирует номер карты, заменяя 7-12 цифры на '*' """
-    logger.info("Начали маскировку карты")
-    mask_card_number = card_number[0:4] + " " + card_number[4:6] + "** ****" + " " + card_number[-4:]
-    logger.info("Маскировка карты закончена")
-    return mask_card_number
+    if len(card_number) == 16:
+        logger.info("Начали маскировку карты")
+        mask_card_number = card_number[0:4] + " " + card_number[4:6] + "** ****" + " " + card_number[-4:]
+        logger.info("Маскировка карты закончена")
+        return mask_card_number
+    else:
+        logger.error("Неверный формат банковской карты")
+        return "Неверный формат банковской карты"
 
 
-def get_mask_account(accaunt_number: str) -> str:
+def get_mask_account(account_number: str) -> str:
     """ Функция маскирует номер аккаунта, оставляя последние 4 цифры"""
-    logger.info("Начали маскировку номера счета")
-    mask_account = "**" + accaunt_number[-4:]
-    logger.info("Маскировка номера счета закончена")
-    return mask_account
+    if len(account_number) == 20:
+        logger.info("Начали маскировку номера счета")
+        mask_account = "**" + account_number[-4:]
+        logger.info("Маскировка номера счета закончена")
+        return mask_account
+    else:
+        logger.error("Неверный формат номера счета")
+        return "Неверный формат номера счета"
