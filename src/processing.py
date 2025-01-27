@@ -1,3 +1,5 @@
+import re
+from collections import Counter
 from typing import Any
 
 input_dict = [
@@ -23,3 +25,26 @@ def sort_by_date(input_dict: list[dict[str, Any]], reverse: bool = True) -> list
     по дате список словарей. """
     sorted_by_date = sorted(input_dict, key=lambda x: x["date"], reverse=reverse)
     return sorted_by_date
+
+
+def filter_by_description(transaction_list: list[dict], search_value: str) -> list[dict]:
+    """Принимает список словарей и строковое значение. Возвращает список словарей, у которых ключ description
+    соответствует строке из второго аргумента"""
+    returned_list = []
+    for transaction in transaction_list:
+        if re.search(search_value, transaction["description"], flags=re.IGNORECASE):
+            returned_list.append(transaction)
+    return returned_list
+
+
+def counter_by_description(transaction_list: list[dict], description_list: list[str]) -> dict:
+    """Принимает на вход список словарей с данными о банковских операциях и список категорий операций.
+    Возвращает словарь, в котором ключи — это названия категорий, а значения — это количество операций
+    в каждой категории."""
+    list_for_requirement = []
+    for description in description_list:
+        for transaction in transaction_list:
+            if transaction["description"] == description.title():
+                list_for_requirement.append(transaction["description"])
+    returned_dict = Counter(list_for_requirement)
+    return returned_dict
